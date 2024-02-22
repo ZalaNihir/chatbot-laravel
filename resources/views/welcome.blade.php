@@ -833,7 +833,6 @@
     <script>
         var botmanWidget = {
             aboutText: 'Laravel Botman Chat',
-            aboutLink: 'http://127.0.0.1:8000',
             introMessage: "Hi, How Can I help you"
         };
     </script>

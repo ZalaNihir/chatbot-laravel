@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use BotMan\BotMan\BotMan;
+use BotMan\BotMan\Messages\Conversations\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
-use Illuminate\Http\Request;
+use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 
 
 class BotmanController extends Controller
@@ -14,21 +14,49 @@ class BotmanController extends Controller
         $botman = app('botman');
 
         $botman->hears('{message}', function ($botman, $message) {
-
-            if ($message == 'hi' || 'Hi') {
-                $this->askName($botman);
+            if (strtolower($message) === 'hi') {
+                $this->askOptions($botman);
             } else {
-                $botman->reply("Please Enter Your Name");
+                $botman->reply("Please say 'hi' to start.");
             }
         });
 
         $botman->listen();
     }
-    public function askName($botman)
+
+    public function askOptions($botman)
     {
-        $botman->ask("Hello! What is Your Name?", function (Answer $answer) {
-            $name = $answer->getText();
-            $this->say('Nice to meet you ' . $name);
-        });
+        $botman->ask('Hi, How can I help you?',
+            function (Answer $answer) use ($botman) {
+                $selectedOption = $answer->getText();
+                switch ($selectedOption) {
+                    case 'Contact Us':
+                        $this->contactUs($botman);
+                        break;
+                    case 'About Us':
+                        $this->aboutUs($botman);
+                        break;
+                    default:
+                        $botman->reply("Sorry, I didn't understand that option.");
+                        break;
+                }
+            },
+            [
+                Button::create('Contact Us')->value('contact_us'),
+                Button::create('About Us')->value('about_us'),
+            ]
+        );
+    }
+
+    public function contactUs($botman)
+    {
+        // Handle Contact Us logic here
+        $botman->reply("You selected 'Contact Us'. How can we help you?");
+    }
+
+    public function aboutUs($botman)
+    {
+        // Handle About Us logic here
+        $botman->reply("You selected 'About Us'. Here is some information about us...");
     }
 }
