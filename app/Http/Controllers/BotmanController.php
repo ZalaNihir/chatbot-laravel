@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Conversation\ExampleConversation;
+use App\Conversations\OptionConversation;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
@@ -20,6 +20,10 @@ class BotmanController extends Controller
         //         $botman->reply("Please say 'hi' to start.");
         //     }
         // });
+        $botman->hears('hi',function ($bot){
+            // $bot->reply('Hello');
+            $this->startconversion($bot);
+        });
         $botman->listen();
     }
 
@@ -78,6 +82,6 @@ class BotmanController extends Controller
     // }
     public function startconversion(Botman $bot)
     {
-        $bot->startConversation(new ExampleConversation());
+        $bot->startConversation(new OptionConversation());
     }
 }
