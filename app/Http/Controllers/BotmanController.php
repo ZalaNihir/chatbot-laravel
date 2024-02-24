@@ -11,14 +11,15 @@ class BotmanController extends Controller
     {
         $botman = app('botman');
         $botman->hears('hi', function (BotMan $bot) {
-            $this->startConversion($bot);
+            $this->startConversion($bot); // Updated method name
         });
         $botman->fallback(function (BotMan $bot) {
-            $this->sayHi($bot);
+            $this->startConversion($bot); // Updated method name
         });
         $botman->listen();
     }
-    public function startconversion(Botman $bot)
+
+    public function startConversion(Botman $bot) // Updated method name
     {
         $bot->startConversation(new OptionConversation());
     }
