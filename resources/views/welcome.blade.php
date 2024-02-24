@@ -20,7 +20,7 @@
             frameEndpoint: '/botman/chat',
             title: 'Custom Chatbot',
             aboutText: 'Laravel Botman Chat',
-            introMessage: "Hi, How Can I help you",
+            introMessage: "Hi, I'm here to help you. To start the conversion Write Hi",
             placeholderText: "Write your message here."
         };
     </script>
